@@ -9,8 +9,8 @@ services:
 before_install:
   - docker build -t dockersimo/client-test -f ./client/Dockerfile.dev ./client
 
-script:
-  - docker run dockersimo/client-test npm run test -- --coverage
+#script:
+#  - docker run dockersimo/client-test npm run test -- --coverage
 
 after_success:
   - docker build -t dockersimo/multi-client ./client
