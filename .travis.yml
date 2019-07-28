@@ -6,10 +6,10 @@ node_js:
 services:
   - docker
 
-#before_install:
+before_install:
 #  - docker build -t dockersimo/client-test -f ./client/Dockerfile.dev ./client
 
-#script:
+script:
 #  - docker run dockersimo/client-test npm run test -- --coverage
 
 after_success:
