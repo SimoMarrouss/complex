@@ -1,0 +1,26 @@
+sudo: required
+language: node_js
+node_js:
+  - "10"
+
+services:
+  - docker
+
+before_install:
+  - docker build -t dockersimo/client-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run dockersimo/client-test npm run test -- --coverage
+
+after_success:
+  - docker build -t dockersimo/multi-client ./client
+  - docker build -t dockersimo/multi-nginx ./nginx
+  - docker build -t dockersimo/multi-server ./server
+  - docker build -t dockersimo/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push dockersimo/multi-client
+  - docker push dockersimo/multi-nginx
+  - docker push dockersimo/multi-server
+  - docker push dockersimo/multi-worker
+ 
